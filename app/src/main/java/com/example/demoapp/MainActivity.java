@@ -2,6 +2,7 @@ package com.example.demoapp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
             String name =  myinput.getText().toString();
             Toast.makeText((Context) MainActivity.this, "Name is " + name, Toast.LENGTH_LONG).show();
             tv.setText(name);
+
+            Intent login = new Intent(MainActivity.this, LoginPage.class);
+            startActivity(login);
         });
 
 
