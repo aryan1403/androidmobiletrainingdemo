@@ -5,10 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.NavController;
@@ -25,10 +34,53 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
     Button btn;
     TextView tv;
     EditText myinput;
+
+    public void getData() {
+        String url = "https://dog-api.kinduff.com/api/facts";
+        RequestQueue rq = Volley.newRequestQueue(this);
+
+        JsonObjectRequest jor = new JsonObjectRequest(url, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    JSONArray arr = jsonObject.getJSONArray("facts");
+                    String data = (String) arr.get(0);
+
+                    tv.setText(data);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                tv.setText("Failed to fetch the data");
+            }
+        });
+
+        /*StringRequest sr = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                tv.setText(response);
+                Toast.makeText(getApplicationContext(), "Response :" + response.toString(), Toast.LENGTH_LONG).show();//display the response on screen
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // Log.i(TAG, "Error :" + error.toString());
+            }
+        });*/
+
+        rq.add(jor);
+    }
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +93,13 @@ public class MainActivity extends AppCompatActivity {
 
         btn.setOnClickListener((View v) -> {
             String name =  myinput.getText().toString();
-            Toast.makeText((Context) MainActivity.this, "Name is " + name, Toast.LENGTH_LONG).show();
-            tv.setText(name);
+            // Toast.makeText((Context) MainActivity.this, "Name is " + name, Toast.LENGTH_LONG).show();
+            // tv.setText(name);
+
+            getData();
 
             Intent login = new Intent(MainActivity.this, LoginPage.class);
-            startActivity(login);
+            // startActivity(login);
         });
-
-
     }
 }
