@@ -44,17 +44,18 @@ public class MainActivity extends AppCompatActivity {
     EditText myinput;
 
     public void getData() {
-        String url = "https://dog-api.kinduff.com/api/facts";
+        String url = "https://mobiledevappnode.onrender.com/todo/123";
         RequestQueue rq = Volley.newRequestQueue(this);
 
         JsonObjectRequest jor = new JsonObjectRequest(url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
-                    JSONArray arr = jsonObject.getJSONArray("facts");
-                    String data = (String) arr.get(0);
+                    JSONObject job = jsonObject.getJSONObject("data");
+                    String todoId = (String) job.get("id");
+                    String task = (String) job.get("task");
 
-                    tv.setText(data);
+                    tv.setText(todoId + ", " + task);
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                tv.setText("Failed to fetch the data");
+                tv.setText(volleyError.toString());
             }
         });
 
