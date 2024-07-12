@@ -97,10 +97,10 @@ public class MainActivity extends AppCompatActivity {
             // Toast.makeText((Context) MainActivity.this, "Name is " + name, Toast.LENGTH_LONG).show();
             // tv.setText(name);
 
-            getData();
+            // getData();
 
             Intent login = new Intent(MainActivity.this, LoginPage.class);
-            // startActivity(login);
+            startActivity(login);
         });
     }
 }
