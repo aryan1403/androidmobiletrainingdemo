@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/expressapi" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/moblieappdevelopment" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/solrdemo" vcs="Git" />
   </component>
 </project>
